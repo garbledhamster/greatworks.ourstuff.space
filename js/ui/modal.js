@@ -31,6 +31,14 @@ export function openModal(slug, state, toggleStar) {
       </ul>
     </div>` : "";
 
+  const wikipedia = b.wikipediaUrl ? `
+    <div>
+      <div class="text-xs uppercase tracking-wide text-zinc-400">Reference</div>
+      <div class="mt-2">
+        <a href="${b.wikipediaUrl}" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">View on Wikipedia</a>
+      </div>
+    </div>` : "";
+
   const themes = `
     <div>
       <div class="text-xs uppercase tracking-wide text-zinc-400">Themes</div>
@@ -44,6 +52,7 @@ export function openModal(slug, state, toggleStar) {
 
   els.modalBody.innerHTML = `
     ${works}
+    ${wikipedia}
     ${themes}
     ${moods}
     <div class="rounded-xl bg-white/5 ring-1 ring-white/10 p-3 text-sm">
