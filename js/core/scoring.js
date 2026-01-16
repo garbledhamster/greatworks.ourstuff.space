@@ -4,6 +4,14 @@
 
 import { BOOKS } from '../data/books.js';
 
+// Mood similarity mappings for better matching
+const MOOD_ALIASES = {
+  "energizing": ["inspiring", "hopeful", "uplifting"],
+  "practical": ["grounding", "accessible", "structured"],
+  "inquiry": ["curious", "analytical"],
+  "clear-eyed": ["clarity", "clear", "sharp"]
+};
+
 export function scoreBook(book, signals) {
   let score = 0;
   const hits = [];
@@ -16,9 +24,20 @@ export function scoreBook(book, signals) {
   }
 
   for (const [m, w] of signals.moods.entries()) {
+    // Direct mood match
     if (book.moods.includes(m)) {
       score += w * 2;
       hits.push(`mood:${m}`);
+    }
+    // Check mood aliases for similar moods
+    else if (MOOD_ALIASES[m]) {
+      for (const alias of MOOD_ALIASES[m]) {
+        if (book.moods.includes(alias)) {
+          score += w * 1.5; // Slightly lower score for similar moods
+          hits.push(`mood-alias:${alias}`);
+          break;
+        }
+      }
     }
   }
 
