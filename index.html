@@ -602,8 +602,9 @@
       };
     }
 
-    function add(map, key, n) {
+    function add(map, key, n, hits, label) {
       map.set(key, (map.get(key) ?? 0) + n);
+      if (hits && label) hits.push(label);
     }
 
     function scoreBook(book, signals) {
